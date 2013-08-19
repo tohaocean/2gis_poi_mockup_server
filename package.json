@@ -1,0 +1,13 @@
+{
+  "name": "2gis_poi_mockup_server",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tohaocean/2gis_poi_mockup_server.git"
+  },
+  "dependencies": {
+    "router": "~0.6.2"
+  }
+}

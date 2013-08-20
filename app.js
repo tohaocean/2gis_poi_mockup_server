@@ -26,8 +26,6 @@ var unproject = function (z, x, y) {
 	    lng = wx * d,
 	    lat = (2 * Math.atan(Math.exp(wy)) - (Math.PI / 2)) * d;
 
-	console.log( z, x, y, wx, wy, lat, lng );
-
 	return {
 		lat : lat,
 		lng : lng

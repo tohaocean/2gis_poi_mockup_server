@@ -19,7 +19,7 @@ git clone git@github.com:tohaocean/2gis_poi_mockup_server.git mockup_server_fold
 node app
 ```
 
-**5. Просмотр результата**
+**4. Просмотр результата**
 
 Приложение будет доступно по адресу:
 

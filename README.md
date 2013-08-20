@@ -29,6 +29,6 @@ http://127.0.0.1:3100/
 
 http://127.0.0.1:3100/z/x/y/
 
-Возможны XHR и JSONP запросы, для JSONP нужен параметр callback:
+Возможны XHR и JSONP запросы, для JSONP нужен параметр `callback`:
 
 http://127.0.0.1:3100/z/x/y/?callback=___JSONP_CALLBACK_NAME___

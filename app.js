@@ -1,5 +1,5 @@
 var http = require('http'),
-	
+
 	__PORT__ = 3100,
 
 	router = require('router'),
@@ -32,6 +32,17 @@ var unproject = function (z, x, y) {
 	};
 };
 
+var clone = function (obj){
+    if(obj == null || typeof(obj) != 'object')
+        return obj;
+
+    var temp = obj.constructor(); // changed
+
+    for(var key in obj)
+        temp[key] = clone(obj[key]);
+    return temp;
+};
+
 var getTilePoi = function(z, x, y){
 	var response = {
 			response: {
@@ -45,21 +56,44 @@ var getTilePoi = function(z, x, y){
 		w_c_x = x * 256 + 128,
 		w_c_y = y * 256 + 128,
 		d = 40,
-		
+
 		nw = unproject(z, w_c_x - d, w_c_y - d),
 		ne = unproject(z, w_c_x + d, w_c_y - d),
 		sw = unproject(z, w_c_x - d, w_c_y + d),
 		se = unproject(z, w_c_x + d, w_c_y + d),
-		randomPoi = poiData[z][Math.floor(Math.random() * poiData[z].length)];
+
+		randomIndex = Math.floor(Math.random() * poiData[z].length),
+		randomPoi = clone(poiData[z][randomIndex]),
+		links_element = {
+			id: randomPoi.linked_id,
+			type: randomPoi.type,
+			name: randomPoi.text
+		},
+		countLinks = Math.floor(Math.random() * 12) + 1;
+
+	if (!randomPoi.text) {
+		console.log('error', randomPoi);
+	}
+
+	delete randomPoi.linked_id;
+	delete randomPoi.type;
+	delete randomPoi.text;
+
+	randomPoi.links = [];
+	for (var i = 0; i < countLinks; i++) {
+		randomPoi.links[i] = clone(links_element);
+		randomPoi.links[i].name += [' [', i, ' из ', countLinks, ']'].join('');
+		console.log( i, 'из', countLinks, randomPoi.links[i].name );
+	}
 
 	randomPoi.hover = [
-		'POLYGON((', 
+		'POLYGON((',
 			nw.lng, ' ', nw.lat,
 			',',
 			ne.lng, ' ', ne.lat,
 			',',
-			se.lng, ' ', se.lat, 
-			',', 
+			se.lng, ' ', se.lat,
+			',',
 			sw.lng, ' ', sw.lat,
 			',',
 			nw.lng, ' ', nw.lat,
@@ -73,8 +107,8 @@ var getTilePoi = function(z, x, y){
 var prepareData = function(callback){
 	fs.readFile('./index.html', function (err, html) {
 	    if (err) {
-	        throw err; 
-	    }       
+	        throw err;
+	    }
 	    indexHtml = html;
 	});
 	fs.readdir(dir, function(err, files){
@@ -100,19 +134,19 @@ var startServer = function(){
 
 		if (isNaN(zoom) || isNaN(tileX) || isNaN(tileY)) {
 			response = JSON.stringify({
-				response : { 	 	 
+				response : {
 			 	 	code : 500,
 			 	 	message	: 'isNaN(z) || isNaN(x) || isNaN(y)'
 				},
-				result : {}	
+				result : {}
 			});
 		} else if ( typeof(poiData[zoom]) === 'undefined' ) {
 			response = JSON.stringify({
-				response : { 	 	 
+				response : {
 			 	 	code : 500,
 			 	 	message	: 'no data for this zoom level'
 				},
-				result : {}	
+				result : {}
 			});
 		} else {
 			response = getTilePoi(zoom, tileX, tileY);

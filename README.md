@@ -19,7 +19,7 @@ git clone git@github.com:tohaocean/2gis_poi_mockup_server.git mockup_server_fold
 node app
 ```
 
-**5. Просмотр результата**
+**4. Просмотр результата**
 
 Приложение будет доступно по адресу:
 
@@ -29,6 +29,6 @@ http://127.0.0.1:3100/
 
 http://127.0.0.1:3100/z/x/y/
 
-Возможны XHR и JSONP запросы, для JSONP нужен параметр callback:
+Возможны XHR и JSONP запросы, для JSONP нужен параметр `callback`:
 
 http://127.0.0.1:3100/z/x/y/?callback=___JSONP_CALLBACK_NAME___

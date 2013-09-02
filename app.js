@@ -71,9 +71,9 @@ var getTilePoi = function(z, x, y){
 		},
 		countLinks = Math.floor(Math.random() * 12) + 1;
 
-	if (!randomPoi.text) {
-		console.log('error', randomPoi);
-	}
+	// if (!randomPoi.text) {
+	// 	console.log('error', randomPoi);
+	// }
 
 	delete randomPoi.linked_id;
 	delete randomPoi.type;
@@ -83,7 +83,7 @@ var getTilePoi = function(z, x, y){
 	for (var i = 0; i < countLinks; i++) {
 		randomPoi.links[i] = clone(links_element);
 		randomPoi.links[i].name += [' [', i, ' из ', countLinks, ']'].join('');
-		console.log( i, 'из', countLinks, randomPoi.links[i].name );
+		// console.log( i, 'из', countLinks, randomPoi.links[i].name );
 	}
 
 	randomPoi.hover = [

@@ -45,12 +45,7 @@ var clone = function (obj){
 
 var getTilePoi = function(z, x, y){
 	var response = {
-			response: {
-				code: 200
-    		},
-    		result: {
-    			poi : []
-			}
+    		poi : []
 		},
 
 		w_c_x = x * 256 + 128,
@@ -99,7 +94,7 @@ var getTilePoi = function(z, x, y){
 			nw.lng, ' ', nw.lat,
 		'))'].join('');
 
-	response.result.poi.push(randomPoi);
+	response.poi.push(randomPoi);
 
 	return JSON.stringify( response );
 };
@@ -134,19 +129,17 @@ var startServer = function(){
 
 		if (isNaN(zoom) || isNaN(tileX) || isNaN(tileY)) {
 			response = JSON.stringify({
-				response : {
+				error : {
 			 	 	code : 500,
 			 	 	message	: 'isNaN(z) || isNaN(x) || isNaN(y)'
-				},
-				result : {}
+				}
 			});
 		} else if ( typeof(poiData[zoom]) === 'undefined' ) {
 			response = JSON.stringify({
-				response : {
+				error : {
 			 	 	code : 500,
 			 	 	message	: 'no data for this zoom level'
-				},
-				result : {}
+				}
 			});
 		} else {
 			response = getTilePoi(zoom, tileX, tileY);

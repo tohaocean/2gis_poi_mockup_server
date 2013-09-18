@@ -156,7 +156,10 @@ var startServer = function(){
 			res.writeHead(200, {'Content-Type': 'application/javascript; charset=utf8'});
 			res.end( [queryData.callback, '(', response, ')'].join('') );
 		} else {
-			res.writeHead(200, {'Content-Type': 'application/json; charset=utf8'});
+			res.writeHead(200, {
+				'Content-Type': 'application/json; charset=utf8',
+				'Access-Control-Allow-Origin' : '*'
+			});
 			res.end( response );
 		}
 	});

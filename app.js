@@ -45,7 +45,13 @@ var clone = function (obj){
 
 var getTilePoi = function(z, x, y){
 	var response = {
-    		poi : []
+			response: {
+				code: 200
+			},
+			result : {
+				poi : [],
+				building : []
+			}
 		},
 
 		w_c_x = x * 256 + 128,
@@ -94,7 +100,7 @@ var getTilePoi = function(z, x, y){
 			nw.lng, ' ', nw.lat,
 		'))'].join('');
 
-	response.poi.push(randomPoi);
+	response.result.poi.push(randomPoi);
 
 	return JSON.stringify( response );
 };

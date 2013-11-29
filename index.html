@@ -3,7 +3,7 @@
 <head>
     <meta charset='utf-8'>
     <title>DGPoi demo</title>
-    <script src="http://maps.api.2gis.ru/2.0/loader.js?pkg=full&mode=debug"></script>
+    <script src="http://maps.api.2gis.dev/2.0/loader.js?pkg=full&mode=debug&skin=dark"></script>
 </head>
 <body>
     <div id="map" style="width: 100%; height: 600px; border: 1px solid #ccc;"></div>
@@ -12,6 +12,7 @@
             var map = new L.Map('map', {
                 center: new L.LatLng(54.980206086231, 82.898068362003),
                 zoom: 15,
+                dgGeoclicker: true,
                 dgPoi: true
             });
 
@@ -29,15 +30,16 @@
             }
 
             var getTestpoi = function(z, x, y) {
-                L.DG.Jsonp({
-                    url : ['/', z, '/', x, '/', y].join(''),
+                L.DG.ajax(['/', z, '/', x, '/', y].join(''), {
+                    type : 'jsonp',
                     success : function(data){
                         if (data.response.code != 200) return;
                         var poi = data.result.poi[0],
                             path = _readWKT(poi.hover);
 
-                        path.on('click', function(){
-                            console.log(poi);
+                        path.setStyle({
+                            clickable : false,
+                            stroke : false
                         }).addTo(map);
                         map.once('viewreset', removeFromMap, path);
                     }
@@ -57,6 +59,18 @@
                 getTestpoi(zoom, tilePoint.x, tilePoint.y);
             };
             map.addLayer(canvasTiles);
+
+            map.on('dgPoiHover', function (event) {
+                console.log('dgPoiHover on poi: ', event);
+            });
+
+            map.on('dgPoiLeave', function (event) {
+                console.log('dgPoiLeave poi', event);
+            });
+
+            map.on('dgPoiClick', function (event) {
+                console.log('dgPoiClick poi', event);
+            });
 
         });
     </script>

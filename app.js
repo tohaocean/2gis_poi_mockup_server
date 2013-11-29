@@ -46,11 +46,11 @@ var clone = function (obj){
 var getTilePoi = function(z, x, y){
 	var response = {
 			response: {
-				code: 200
+				code: "200"
 			},
 			result : {
-				poi : [],
-				building : []
+				buildings : [],
+				poi : []
 			}
 		},
 
@@ -80,12 +80,12 @@ var getTilePoi = function(z, x, y){
 	delete randomPoi.type;
 	delete randomPoi.text;
 
-	randomPoi.links = [];
-	for (var i = 0; i < countLinks; i++) {
-		randomPoi.links[i] = clone(links_element);
-		randomPoi.links[i].name += [' [', i, ' из ', countLinks, ']'].join('');
-		// console.log( i, 'из', countLinks, randomPoi.links[i].name );
-	}
+	randomPoi.links = [clone(links_element)];
+	// for (var i = 0; i < countLinks; i++) {
+	// 	randomPoi.links[i] = clone(links_element);
+	// 	randomPoi.links[i].name += [' [', i, ' из ', countLinks, ']'].join('');
+	// 	// console.log( i, 'из', countLinks, randomPoi.links[i].name );
+	// }
 
 	randomPoi.hover = [
 		'POLYGON((',
